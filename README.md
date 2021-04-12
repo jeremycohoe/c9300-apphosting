@@ -90,4 +90,14 @@ interface Vlan48
 end
 ```
 
+## Common commands:
+
+app-hosting install appid Greengrass package usbflash1:Greengrass.tar
+app-hosting stop appid Greengrass
+app-hosting deactivate appid Greengrass
+app-hosting activate appid Greengrass
+app-hosting start appid Greengrass
+app-hosting connect appid Greengrass session
+
+$ scp Greengrass.tar admin@10.1.1.5:usbflash1:/Greengrass.tar
 
