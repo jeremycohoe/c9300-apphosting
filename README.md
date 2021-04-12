@@ -1,5 +1,7 @@
 # c9300-apphosting
 
+See guide @ https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/174/b_174_programmability_cg/application_hosting.html#id_96211
+
 ## Greengrass on Management port:
 
 ```
@@ -31,8 +33,25 @@ interface GigabitEthernet0/0
 end
 ```
 
-## Ap1/0/1 Configuration:
+## Greengrass on Front Panel VLAN Port
+```
+C9300#show ru | s Gr
+app-hosting appid Greengrass
+ app-vnic AppGigabitEthernet trunk
+  vlan 48 guest-interface 0
+   guest-ipaddress 10.1.1.9 netmask 255.255.255.0
+ app-default-gateway 10.1.1.3 guest-interface 0
+ app-resource docker
+  run-opts 1 "--entrypoint /greengrass-entrypoint.sh"
+ app-resource package-profile custom
+ app-resource profile custom
+  cpu 5000
+  memory 1000
+  persist-disk 8192
+ name-server0 10.1.1.3
+```
 
+## Interfaces configuration:
 ```
 C9300#show int status  | e notc
 
@@ -71,20 +90,4 @@ interface Vlan48
 end
 ```
 
-## App Configuration
-```
-C9300#show ru | s Gr
-app-hosting appid Greengrass
- app-vnic AppGigabitEthernet trunk
-  vlan 48 guest-interface 0
-   guest-ipaddress 10.1.1.9 netmask 255.255.255.0
- app-default-gateway 10.1.1.3 guest-interface 0
- app-resource docker
-  run-opts 1 "--entrypoint /greengrass-entrypoint.sh"
- app-resource package-profile custom
- app-resource profile custom
-  cpu 5000
-  memory 1000
-  persist-disk 8192
- name-server0 10.1.1.3
-```
+
